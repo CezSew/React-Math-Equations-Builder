@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { IAppContext } from "./appContext.model";
 
 const defaultState = {
+    handleSetValueForFieldId: () => {},
     handleChangeActiveField: () => {},
     handleAddFieldToTree: () => {},
     createField: () => {},

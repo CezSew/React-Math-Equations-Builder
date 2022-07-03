@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Value } from "sass";
 import { IField, IFieldsTree, TFieldType } from "../App.model";
 
 const rootField: IFieldsTree = {
     '0': {
         type: 'rootField',
         childFields: [],
+        value: '',
         id: 0,
     },
 };
@@ -28,6 +30,7 @@ const useFieldsTree = () => {
             childFields: assignedFieldsIds,
             type: mainFieldType,
             id: lastAssignedId + 1,
+            value: '',
         };
 
         const subfields: IField[] = types.map((type, index) => {
@@ -36,6 +39,7 @@ const useFieldsTree = () => {
 
             return {
                 childFields: [],
+                value: '',
                 type,
                 id,
             }
@@ -66,7 +70,19 @@ const useFieldsTree = () => {
         });
     };
 
-    return { fieldsTree, lastAssignedId, createField };
+    const handleSetValueForFieldId = (value: string, id: number) => {
+        console.log(value)
+        console.log(fieldsTree)
+
+        const tree = Object.assign(fieldsTree, {});
+        tree[`${id}`].value = value;
+
+
+        console.log(tree)
+        setFieldsTree({...tree});
+    };
+
+    return { fieldsTree, lastAssignedId, createField, handleSetValueForFieldId };
 };
 
 export default useFieldsTree;

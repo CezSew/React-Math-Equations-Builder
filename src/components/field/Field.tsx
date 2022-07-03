@@ -3,8 +3,9 @@ import { useContext } from "react";
 import { IField } from "../../App.model";
 import { AppContext } from "../../context/appContext";
 
-const Field = ({ type, childFields, id }: IField) => {
+const Field = ({ type, childFields, id, value }: IField) => {
     const {
+        handleSetValueForFieldId,
         handleChangeActiveField,
         createField,
         activeField,
@@ -18,24 +19,40 @@ const Field = ({ type, childFields, id }: IField) => {
     const handleClickAdd = (e: React.MouseEvent<Element, MouseEvent>) => {
         e.stopPropagation();
 
-        createField('power', { type, childFields, id });
-    }
+        createField('power', { type, childFields, id, value });
+    };
+
+    const handleTypeValue = (e: React.KeyboardEvent<Element>) => {
+        e.stopPropagation();
+
+        console.log('handleTypeValue')
+        console.log(value)
+
+        const newValue = `${value}${e.key}`;
+
+        handleSetValueForFieldId(newValue, id);
+    };
 
     return (
         <>
             <div
                 className={`field field--${type} ${activeField === id ? 'field--active' : ''}`}
                 onClick={handleFieldClick}
+                onKeyDown={handleTypeValue}
+                tabIndex={id}
             >
-                <button onClick={handleClickAdd}>
-                    {`add field for ${id}`}
-                </button>
-
-                <div>
-                    {type}
-                </div>
-
-                <br/>
+                {activeField === id && (
+                    <button onClick={handleClickAdd} className={`field__add-field`}>
+                        {`${id}`}
+                    </button>
+                )}
+            
+                {value && (
+                    <span className={`field__value`}>
+                        {value}
+                    </span>
+                )}
+               
 
                 {childFields && childFields.map(fieldId => (
                     <Field key={fieldId} {...fieldsTree[`${fieldId}`]} id={fieldId} />

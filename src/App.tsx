@@ -8,7 +8,7 @@ import useFieldsTree from './hooks/useFieldsTree';
 import { useEffect } from 'react';
 
 const App = () => {
-    const { fieldsTree, lastAssignedId, createField } = useFieldsTree();
+    const { fieldsTree, lastAssignedId, createField, handleSetValueForFieldId } = useFieldsTree();
     const [activeField, setActiveField] = useState(0);
 
     const handleChangeActiveField = (fieldId: number, e: React.MouseEvent<Element, MouseEvent>) => {
@@ -19,6 +19,7 @@ const App = () => {
     return (
         <div className={`app`}>
             <AppContext.Provider value={{
+                    handleSetValueForFieldId,
                     handleChangeActiveField,
                     lastAssignedId,
                     createField,
