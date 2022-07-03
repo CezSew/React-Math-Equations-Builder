@@ -1,29 +1,24 @@
 import React from "react";
-import { useEffect } from "react";
 import { useContext } from "react";
 import { IField } from "../../App.model";
 import { AppContext } from "../../context/appContext";
 
-const Field = ({ type, value, childFields, id }: IField) => {
+const Field = ({ type, childFields, id }: IField) => {
     const {
         handleChangeActiveField,
-        handleAddFieldToTree,
-        lastAssignedId,
+        createField,
         activeField,
         fieldsTree,
     } = useContext(AppContext);
 
-    const handleFieldClick = () => {
-        handleChangeActiveField(id);
+    const handleFieldClick = (e: React.MouseEvent<Element, MouseEvent>) => {
+        handleChangeActiveField(id, e);
     };
 
-    const handleClickAdd = () => {
-        handleAddFieldToTree({
-            type: 'power',
-            value: 5,
-            id: lastAssignedId + 1,
-            childFields: []
-        }, { type, value, childFields, id })
+    const handleClickAdd = (e: React.MouseEvent<Element, MouseEvent>) => {
+        e.stopPropagation();
+
+        createField('power', { type, childFields, id });
     }
 
     return (
@@ -32,18 +27,20 @@ const Field = ({ type, value, childFields, id }: IField) => {
                 className={`field field--${type} ${activeField === id ? 'field--active' : ''}`}
                 onClick={handleFieldClick}
             >
-                {type}
+                <button onClick={handleClickAdd}>
+                    {`add field for ${id}`}
+                </button>
+
+                <div>
+                    {type}
+                </div>
+
+                <br/>
+
+                {childFields && childFields.map(fieldId => (
+                    <Field key={fieldId} {...fieldsTree[`${fieldId}`]} id={fieldId} />
+                ))}
             </div>
-
-            <button onClick={handleClickAdd}>
-                add field
-            </button>
-
-            <br/>
-
-            {childFields.map(fieldId => (
-                <Field key={fieldId} {...fieldsTree[fieldId]} id={fieldId} />
-            ))}
         </>
     );
 };

@@ -1,8 +1,8 @@
-import { IField, IFieldsTree } from "../App.model";
+import { IField, IFieldsTree, TFieldType } from "../App.model";
 
 export interface IAppContext {
-    handleAddFieldToTree: (field: IField, parent: IField) => void;
-    handleChangeActiveField: (id: number) => void;
+    handleChangeActiveField: (id: number, e: React.MouseEvent<Element, MouseEvent>) => void;
+    createField: (type: TFieldType, parent: IField) => void;
     fieldsTree: IFieldsTree;
     lastAssignedId: number;
     activeField: number;

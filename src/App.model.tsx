@@ -1,7 +1,6 @@
-export type TFieldType = 'rootField' | 'power' | 'fraction' | 'root';
+export type TFieldType = 'rootField' | 'power' | 'fraction' | 'root' | 'text';
 
 export interface IField {
-    value: null | string | number;
     childFields: number[];
     type: TFieldType;
     id: number;

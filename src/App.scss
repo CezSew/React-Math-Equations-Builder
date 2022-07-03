@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.field {
+  display: inline-block;
+  border: 2px dashed black;
+  padding: 1rem;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.field--active {
+  border-color: blue;
+}

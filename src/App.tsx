@@ -5,21 +5,23 @@ import Field from './components/field/Field';
 import { IField, IFieldsTree } from './App.model';
 import { AppContext } from './context/appContext';
 import useFieldsTree from './hooks/useFieldsTree';
+import { useEffect } from 'react';
 
 const App = () => {
-    const { fieldsTree, handleAddFieldToTree, lastAssignedId } = useFieldsTree();
+    const { fieldsTree, lastAssignedId, createField } = useFieldsTree();
     const [activeField, setActiveField] = useState(0);
 
-    const handleChangeActiveField = (fieldId: number) => {
-        console.log(fieldId);
+    const handleChangeActiveField = (fieldId: number, e: React.MouseEvent<Element, MouseEvent>) => {
+        e.stopPropagation();
+        setActiveField(fieldId);
     };
 
     return (
         <div className={`app`}>
             <AppContext.Provider value={{
                     handleChangeActiveField,
-                    handleAddFieldToTree,
                     lastAssignedId,
+                    createField,
                     activeField,
                     fieldsTree
                 }}

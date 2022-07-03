@@ -4,6 +4,7 @@ import { IAppContext } from "./appContext.model";
 const defaultState = {
     handleChangeActiveField: () => {},
     handleAddFieldToTree: () => {},
+    createField: () => {},
     lastAssignedId: 0,
     fieldsTree: {},
     activeField: 0,
